@@ -4,8 +4,12 @@ sed -E -i '' "s/Compiled 20[0-9]{2}-[0-1][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:
 
 cat $1.lua > $1COMPILE.lua
 
-for f in functions/*.lua; do
-	cat $f >> $1COMPILE.lua
+for f in *.lua; do
+	if [[ "$f" != $1*.lua ]]; then
+		cat $f >> $1COMPILE.lua
+	fi		
 done
 
 luna $1COMPILE.lua $1.tns
+
+rm $1COMPILE.lua
