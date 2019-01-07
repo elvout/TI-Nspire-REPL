@@ -8,7 +8,7 @@ MAXLINES = 9
 debug = {cursor = false}
 
 function on.paint(gc)
-	start = math.max(#lines - MAXLINES + 1, 1)
+	local start = math.max(#lines - MAXLINES + 1, 1)
 
 	gc:setFont('sansserif', 'r', 11)
 	for cur = start, #lines do
@@ -27,7 +27,7 @@ function on.paint(gc)
 		end
 	end
 
-	caret_pos = gc:getStringWidth(lines[#lines]:sub(1, cursor))
+	local caret_pos = gc:getStringWidth(lines[#lines]:sub(1, cursor))
 
 	gc:setFont('sansserif', 'r', 12)
 	gc:drawString(	caret,
@@ -35,7 +35,7 @@ function on.paint(gc)
 					gc:getStringHeight('') * (#lines - start + 1) - 1	)
 
 	gc:setFont('sansserif', 'r', 10)
-	gc:drawString('Compiled 2019-01-07 04:46:28 PM', 5, platform.window:height() - 1)
+	gc:drawString('Compiled 2019-01-07 05:43:17 PM', 5, platform.window:height() - 1)
 
 	if debug.cursor then
 		debug_cursor(gc)
@@ -43,14 +43,14 @@ function on.paint(gc)
 end
 
 function debug_cursor(gc)
-	raw = ''
+	local raw = ''
 	for i = 1, lines[#lines]:len() do
 		raw = raw .. lines[#lines]:byte(i) .. ' '
 	end
 	
 	gc:setFont('sansserif', 'r', 10)
-	gc:drawString(raw, 5, platform.window:height() - 24)
-	gc:drawString(cursor, 5, platform.window:height() - 12)
+	gc:drawString(raw, 5, platform.window:height() - gc:getStringHeight('') * 2)
+	gc:drawString(cursor, 5, platform.window:height() - gc:getStringHeight(''))
 end
 
 function on.getFocus()
@@ -180,7 +180,7 @@ function on.arrowRight()
 end
 
 function on.tabKey()
-	i = cursor
+	local i = cursor
 
 	while i < lines[#lines]:len() and
 			(lines[#lines]:byte(i + 1) == 32 or lines[#lines]:byte(i + 1) == 44) do
@@ -198,7 +198,7 @@ function on.tabKey()
 end
 
 function on.backtabKey()
-	i = cursor
+	local i = cursor
 
 	while i > 4 and
 			(lines[#lines]:byte(i) == 32 or lines[#lines]:byte(i) == 44) do
@@ -216,7 +216,7 @@ function on.backtabKey()
 end
 
 function on.clearKey()
-	i = cursor
+	local i = cursor
 
 	while i > 4 and (lines[#lines]:byte(i) == 32 or lines[#lines]:byte(i) == 44) do
 		i = i - 1
@@ -227,14 +227,14 @@ function on.clearKey()
 	end
 
 	lines[#lines] = lines[#lines]:sub(1, i) .. lines[#lines]:sub(cursor + 1)
-	cursor = i
 
+	cursor = i
 	caret = '|'
 	platform.window:invalidate()
 end
 
 function on.enterKey()
-	args = lines[#lines]:sub(5):split('[, ]+')
+	local args = lines[#lines]:sub(5):split('[, ]+')
 
 	if args[1]:sub(1, 2) == 'ba' then
 		if #args == 4 then
@@ -264,7 +264,7 @@ function on.enterKey()
 end
 
 function eval(expr)
-	result, err = math.eval(expr)
+	local result, err = math.eval(expr)
 	if result ~= nil then
 		return result
 	else

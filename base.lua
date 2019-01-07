@@ -3,20 +3,20 @@ function baseconv(s, from_radix, to_radix)
 	from_radix = tonumber(from_radix)
 	to_radix = tonumber(to_radix)
 
-	digits = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 
+	local digits = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 
 			  'a', 'b', 'c', 'd', 'e', 'f'}
 
 	if from_radix == nil or to_radix == nil or
-		from_radix < 2 or to_radix < 2 or 
-		from_radix > 16 or to_radix > 16 or
-		from_radix ~= math.floor(from_radix) or
-		to_radix ~= math.floor(to_radix) 
+			from_radix < 2 or to_radix < 2 or 
+			from_radix > 16 or to_radix > 16 or
+			from_radix ~= math.floor(from_radix) or
+			to_radix ~= math.floor(to_radix) 
 		then return 'invalid base'
 	end
 
-	negative = (s:byte() == 45) or (s:byte() == 226)
+	local negative = (s:byte() == 45) or (s:byte() == 226)
 
-	baseten = 0
+	local baseten = 0
 
 	if negative then
 		if s:len() == 1 then
@@ -37,7 +37,7 @@ function baseconv(s, from_radix, to_radix)
 		return 'invalid input string'
 	end
 
-	result = ''
+	local result = ''
 
 	while baseten > 0 do
 		-- 1 added because of 1-indexing
