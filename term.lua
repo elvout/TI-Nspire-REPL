@@ -1,7 +1,7 @@
-INSYMB = '>>> '
-lines = {INSYMB}
+PROMPT = '>>> '
+lines = {PROMPT}
 hist_index = 1
-hist_temp = INSYMB
+hist_temp = PROMPT
 cursor = lines[#lines]:len()
 caret = '|'
 MAXLINES = 9
@@ -36,7 +36,7 @@ function on.paint(gc)
 					gc:getStringHeight('') * (#lines - start + 1) - 1	)
 
 	gc:setFont('sansserif', 'r', 10)
-	gc:drawString('Compiled 2019-01-08 09:06:27 AM', 5, platform.window:height() - 1)
+	gc:drawString('Compiled 2019-01-08 09:06:15 AM', 5, platform.window:height() - 1)
 	gc:drawString('-h for help', platform.window:width() - gc:getStringWidth('-h for help') - 5, 
 					platform.window:height() - 1)
 
@@ -75,10 +75,10 @@ function on.timer()
 end
 
 function on.charIn(char)
-	if lines[#lines]:sub(1, INSYMB:len()) == INSYMB then
+	if lines[#lines]:sub(1, PROMPT:len()) == PROMPT then
 		lines[#lines] = lines[#lines]:sub(1, cursor) .. char .. lines[#lines]:sub(cursor + 1)
 	else
-		table.insert(lines, INSYMB .. char)
+		table.insert(lines, PROMPT .. char)
 	end
 
 	cursor = cursor + char:len()
@@ -119,7 +119,7 @@ function on.arrowUp()
 
 	hist_index = math.max(hist_index - 1, 1)
 	while hist_index > 0 do
-		if lines[hist_index]:sub(1, INSYMB:len()) == INSYMB then
+		if lines[hist_index]:sub(1, PROMPT:len()) == PROMPT then
 			lines[#lines] = lines[hist_index]
 			break
 		end
@@ -139,7 +139,7 @@ function on.arrowDown()
 	hist_index = math.min(hist_index + 1, #lines)
 
 	while hist_index <= #lines do
-		if lines[hist_index]:sub(1, INSYMB:len()) == INSYMB then
+		if lines[hist_index]:sub(1, PROMPT:len()) == PROMPT then
 			break
 		end
 		hist_index = hist_index + 1
@@ -330,7 +330,7 @@ function on.enterKey()
 		if #lines > 0 then
 			table.remove(lines)
 		end
-		while #lines > 0 and table.remove(lines):find(INSYMB) == nil do end
+		while #lines > 0 and table.remove(lines):find(PROMPT) == nil do end
 	elseif args[1] == 'rr' then
 		lines = {}
 	elseif args[1] == '-v' then
@@ -349,10 +349,10 @@ function on.enterKey()
 		table.insert(lines, eval(args[1]))
 	end
 	
-	table.insert(lines, INSYMB)
+	table.insert(lines, PROMPT)
 	
 	hist_index = #lines
-	hist_temp = INSYMB
+	hist_temp = PROMPT
 	cursor = lines[#lines]:len()
 
 	platform.window:invalidate()
