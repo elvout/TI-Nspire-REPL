@@ -36,7 +36,7 @@ function on.paint(gc)
 					gc:getStringHeight('') * (#lines - start + 1) - 1	)
 
 	gc:setFont('sansserif', 'r', 10)
-	gc:drawString('Compiled 2019-01-07 06:39:22 PM', 5, platform.window:height() - 1)
+	gc:drawString('Compiled 2019-01-07 06:53:17 PM', 5, platform.window:height() - 1)
 
 	if debug.cursor then
 		debug_cursor(gc)
@@ -246,7 +246,7 @@ function on.enterKey()
 	elseif args[1] == '-h' or args[1] == 'help' then
 		local msg = {
 			'> ba    converts numbers between bases',
-			'> rr    resets script',
+			'> rr    clears history',
 			'', 
 			'> simple math can be evaluated'
 		}
