@@ -36,7 +36,7 @@ function on.paint(gc)
 					gc:getStringHeight('') * (#lines - start + 1) - 1	)
 
 	gc:setFont('sansserif', 'r', 10)
-	gc:drawString('Compiled 2019-01-07 10:30:47 PM', 5, platform.window:height() - 1)
+	gc:drawString('Compiled 2019-01-08 08:32:36 AM', 5, platform.window:height() - 1)
 	gc:drawString('-h for help', platform.window:width() - gc:getStringWidth('-h for help') - 5, 
 					platform.window:height() - 1)
 
@@ -285,6 +285,15 @@ function on.enterKey()
 			table.insert(lines, 'Usage: ba, number, from_radix, [to_radix]')
 			table.insert(lines, 'to_radix (optional) defaults to 10')
 		end
+	elseif args[1]:sub(1, 2) == 'be' then
+		if #args == 5 then
+			len, angle = bearing(args[2], args[3], args[4], args[5])
+			table.insert(lines, len)
+			table.insert(lines, angle)
+		else
+			table.insert(lines, 'Usage: be, x1, θ1, x2, θ2')
+			table.insert(lines, 'angles are in degrees')
+		end	
 	elseif args[1] == '-h' or args[1] == 'help' then
 		local msg = {
 			'> -c to list commands',
