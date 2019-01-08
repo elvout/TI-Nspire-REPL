@@ -1,4 +1,5 @@
-lines = {'>>> '}
+INSYMB = '>>> '
+lines = {INSYMB}
 hist_index = 1
 hist_temp = ''
 cursor = lines[#lines]:len()
@@ -35,7 +36,7 @@ function on.paint(gc)
 					gc:getStringHeight('') * (#lines - start + 1) - 1	)
 
 	gc:setFont('sansserif', 'r', 10)
-	gc:drawString('Compiled 2019-01-07 06:24:06 PM', 5, platform.window:height() - 1)
+	gc:drawString('Compiled 2019-01-07 06:39:22 PM', 5, platform.window:height() - 1)
 
 	if debug.cursor then
 		debug_cursor(gc)
@@ -72,10 +73,10 @@ function on.timer()
 end
 
 function on.charIn(char)
-	if lines[#lines]:sub(1, 1) == '>' then
+	if lines[#lines]:sub(1, INSYMB:len()) == INSYMB then
 		lines[#lines] = lines[#lines]:sub(1, cursor) .. char .. lines[#lines]:sub(cursor + 1)
 	else
-		table.insert(lines, '>>> ' .. char)
+		table.insert(lines, INSYMB .. char)
 	end
 
 	cursor = cursor + char:len()
@@ -112,7 +113,7 @@ function on.arrowUp()
 
 	hist_index = math.max(hist_index - 1, 1)
 	while hist_index > 0 do
-		if lines[hist_index]:sub(1, 1) == '>' then
+		if lines[hist_index]:sub(1, INSYMB:len()) == INSYMB then
 			lines[#lines] = lines[hist_index]
 			break
 		end
@@ -128,7 +129,7 @@ function on.arrowDown()
 	hist_index = math.min(hist_index + 1, #lines)
 
 	while hist_index <= #lines do
-		if lines[hist_index]:sub(1, 1) == '>' then
+		if lines[hist_index]:sub(1, INSYMB:len()) == INSYMB then
 			break
 		end
 		hist_index = hist_index + 1
@@ -271,7 +272,7 @@ function on.enterKey()
 		table.insert(lines, eval(args[1]))
 	end
 	
-	table.insert(lines, '>>> ')
+	table.insert(lines, INSYMB)
 	
 	hist_index = #lines
 	hist_temp = ''
