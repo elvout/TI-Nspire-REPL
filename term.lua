@@ -36,7 +36,7 @@ function on.paint(gc)
 					gc:getStringHeight('') * (#lines - start + 1) - 1	)
 
 	gc:setFont('sansserif', 'r', 10)
-	gc:drawString('Compiled 2019-01-07 07:54:33 PM', 5, platform.window:height() - 1)
+	gc:drawString('Compiled 2019-01-07 08:50:59 PM        \'-h\' for help', 5, platform.window:height() - 1)
 
 	if debug.cursor then
 		debug_cursor(gc)
@@ -248,10 +248,21 @@ function on.enterKey()
 		end
 	elseif args[1] == '-h' or args[1] == 'help' then
 		local msg = {
+			'> -c to list commands',
+			'up/down to access command history',
+			'left/right/tab/shift+tab to navigate',
+			'ctrl+del to delete word'
+		}
+
+		for i = 1, #msg do
+			table.insert(lines, msg[i])
+		end
+	elseif args[1] == '-c' then
+		local msg = {
 			'> ba    converts numbers between bases',
-			'> rr    clears history',
-			'', 
-			'> simple math can be evaluated'
+			'> rr     clears history',
+			'> evaluates simple math if sole command',
+			''
 		}
 
 		for i = 1, #msg do
