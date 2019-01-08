@@ -35,7 +35,7 @@ function on.paint(gc)
 					gc:getStringHeight('') * (#lines - start + 1) - 1	)
 
 	gc:setFont('sansserif', 'r', 10)
-	gc:drawString('Compiled 2019-01-07 05:43:17 PM', 5, platform.window:height() - 1)
+	gc:drawString('Compiled 2019-01-07 06:24:06 PM', 5, platform.window:height() - 1)
 
 	if debug.cursor then
 		debug_cursor(gc)
@@ -242,12 +242,29 @@ function on.enterKey()
 		else
 			table.insert(lines, 'Usage: ba[se], number, from_radix, to_radix')
 		end
+	elseif args[1] == '-h' or args[1] == 'help' then
+		local msg = {
+			'> ba    converts numbers between bases',
+			'> rr    resets script',
+			'', 
+			'> simple math can be evaluated'
+		}
+
+		for i = 1, #msg do
+			table.insert(lines, msg[i])
+		end
 	elseif args[1] == 'rr' then
 		lines = {}
 	elseif args[1] == '-v' then
-		table.insert(lines, _VERSION)
-		table.insert(lines, 'API Level: ' .. platform.apiLevel)
-		table.insert(lines, 'Compiled with Luna 2.0')
+		local msg = {
+			_VERSION,	
+			'API Level: ' .. platform.apiLevel,
+			'Compiled with Luna 2.0'
+		}
+		
+		for i = 1, #msg do
+			table.insert(lines, msg[i])
+		end
 	elseif args[1] == '-dc' then
 		debug.cursor = not debug.cursor
 	elseif #args == 1 then
