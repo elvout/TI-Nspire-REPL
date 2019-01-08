@@ -37,6 +37,10 @@ function baseconv(s, from_radix, to_radix)
 		return 'invalid input string'
 	end
 
+	if to_radix == 10 then
+		return baseten
+	end
+
 	local result = ''
 
 	while baseten > 0 do

@@ -36,7 +36,7 @@ function on.paint(gc)
 					gc:getStringHeight('') * (#lines - start + 1) - 1	)
 
 	gc:setFont('sansserif', 'r', 10)
-	gc:drawString('Compiled 2019-01-07 06:53:17 PM', 5, platform.window:height() - 1)
+	gc:drawString('Compiled 2019-01-07 07:54:33 PM', 5, platform.window:height() - 1)
 
 	if debug.cursor then
 		debug_cursor(gc)
@@ -240,8 +240,11 @@ function on.enterKey()
 	if args[1]:sub(1, 2) == 'ba' then
 		if #args == 4 then
 			table.insert(lines, baseconv(args[2], args[3], args[4]))
+		elseif #args == 3 then
+			table.insert(lines, baseconv(args[2], args[3], 10))
 		else
-			table.insert(lines, 'Usage: ba[se], number, from_radix, to_radix')
+			table.insert(lines, 'Usage: ba, number, from_radix, [to_radix]')
+			table.insert(lines, 'to_radix (optional) defaults to 10')
 		end
 	elseif args[1] == '-h' or args[1] == 'help' then
 		local msg = {
