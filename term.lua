@@ -245,7 +245,6 @@ function rtrim(s)
 end
 
 function nans(idx)
-	print(idx)
 	i = tonumber(idx:sub(2))
 
 	for j = #lines, 1, -1 do
@@ -254,7 +253,6 @@ function nans(idx)
 		end
 
 		if i == 0 then
-			print(lines[j])
 			return lines[j]
 		end
 	end
@@ -263,7 +261,7 @@ end
 
 function on.enterKey()
 	lines[#lines] = rtrim(lines[#lines])
-	
+
 	if lines[#lines]:find('=') ~= nil then
 		lines[#lines] = lines[#lines]:gsub("(=%d)", nans)
 	end
