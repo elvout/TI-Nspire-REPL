@@ -14,7 +14,7 @@ function baseconv(s, from_radix, to_radix)
 		then return 'invalid base'
 	end
 
-	local negative = (s:byte() == 45) or (s:byte() == 226 and s:byte(1) == 136 and s:byte(2) == 146)
+	local negative = (s:byte() == 45) or (s:byte() == 226 and s:byte(2) == 136 and s:byte(3) == 146)
 
 	local baseten = 0
 
@@ -23,12 +23,7 @@ function baseconv(s, from_radix, to_radix)
 			return 'invalid input string'
 		end
 
-		baseten = tonumber(s:sub(2), from_radix)
-		
-		if baseten == nil then
-			-- U+2212 minus sign (3 bytes)
-			baseten = tonumber(s:sub(4), from_radix)
-		end
+		baseten = tonumber(s:sub(2), from_radix) or tonumber(s:sub(4), from_radix)
 	else
 		baseten = tonumber(s, from_radix)
 	end
