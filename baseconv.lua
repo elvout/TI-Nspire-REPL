@@ -4,7 +4,7 @@ function baseconv(s, from_radix, to_radix)
 	to_radix = tonumber(to_radix)
 
 	local digits = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 
-			  'a', 'b', 'c', 'd', 'e', 'f'}
+					'a', 'b', 'c', 'd', 'e', 'f'}
 
 	if from_radix == nil or to_radix == nil or
 			from_radix < 2 or to_radix < 2 or 
