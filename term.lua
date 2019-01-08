@@ -36,7 +36,7 @@ function on.paint(gc)
 					gc:getStringHeight('') * (#lines - start + 1) - 1	)
 
 	gc:setFont('sansserif', 'r', 10)
-	gc:drawString('Compiled 2019-01-07 08:57:21 PM', 5, platform.window:height() - 1)
+	gc:drawString('Compiled 2019-01-07 10:08:51 PM', 5, platform.window:height() - 1)
 	gc:drawString('-h for help', platform.window:width() - gc:getStringWidth('-h for help') - 5, 
 					platform.window:height() - 1)
 
@@ -236,7 +236,38 @@ function on.clearKey()
 	platform.window:invalidate()
 end
 
+function rtrim(s)
+	for i = #s, 1, -1 do
+		if s:byte(i) ~= 32 then
+			return s:sub(1, i)
+		end
+	end
+end
+
+function nans(idx)
+	print(idx)
+	i = tonumber(idx:sub(2))
+
+	for j = #lines, 1, -1 do
+		if lines[j]:match('[a-f0-9.]+') == lines[j] then
+			i = i - 1
+		end
+
+		if i == 0 then
+			print(lines[j])
+			return lines[j]
+		end
+	end
+	return '[' .. idx .. ' not found]'
+end
+
 function on.enterKey()
+	lines[#lines] = rtrim(lines[#lines])
+	
+	if lines[#lines]:find('=') ~= nil then
+		lines[#lines] = lines[#lines]:gsub("(=%d)", nans)
+	end
+
 	local args = lines[#lines]:sub(5):split('[, ]+')
 
 	if args[1]:sub(1, 2) == 'ba' then
@@ -251,6 +282,7 @@ function on.enterKey()
 	elseif args[1] == '-h' or args[1] == 'help' then
 		local msg = {
 			'> -c to list commands',
+			'=n : (1-9) access nth last result',
 			'up/down to access command history',
 			'left/right/tab/shift+tab to navigate',
 			'ctrl+del to delete word'
