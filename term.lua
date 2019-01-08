@@ -36,7 +36,7 @@ function on.paint(gc)
 					gc:getStringHeight('') * (#lines - start + 1) - 1	)
 
 	gc:setFont('sansserif', 'r', 10)
-	gc:drawString('Compiled 2019-01-08 08:52:38 AM', 5, platform.window:height() - 1)
+	gc:drawString('Compiled 2019-01-08 09:06:27 AM', 5, platform.window:height() - 1)
 	gc:drawString('-h for help', platform.window:width() - gc:getStringWidth('-h for help') - 5, 
 					platform.window:height() - 1)
 
@@ -310,6 +310,7 @@ function on.enterKey()
 		local msg = {
 			'> ba    base conversion',
 			'> be    bearing function',
+			'> dd    deletes last entry',
 			'> rr     clears history',
 			'> ls     lists available past results',
 			'> evaluates simple math if sole command',
@@ -325,6 +326,11 @@ function on.enterKey()
 				table.insert(lines, string.format('=%d: %20s', i, nans('=' .. i)))
 			end
 		end
+	elseif args[1] == 'dd' then
+		if #lines > 0 then
+			table.remove(lines)
+		end
+		while #lines > 0 and table.remove(lines):find(INSYMB) == nil do end
 	elseif args[1] == 'rr' then
 		lines = {}
 	elseif args[1] == '-v' then
