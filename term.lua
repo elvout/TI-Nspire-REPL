@@ -36,7 +36,7 @@ function on.paint(gc)
 					gc:getStringHeight('') * (#lines - start + 1) - 1	)
 
 	gc:setFont('sansserif', 'r', 10)
-	gc:drawString('Compiled 2019-01-08 08:32:36 AM', 5, platform.window:height() - 1)
+	gc:drawString('Compiled 2019-01-08 08:48:21 AM', 5, platform.window:height() - 1)
 	gc:drawString('-h for help', platform.window:width() - gc:getStringWidth('-h for help') - 5, 
 					platform.window:height() - 1)
 
@@ -256,7 +256,7 @@ function nans(idx)
 	i = tonumber(idx:sub(2))
 
 	for j = #lines, 1, -1 do
-		if lines[j]:match('[a-f0-9.]+') == lines[j] then
+		if lines[j]:match('[a-f0-9.º]+') == lines[j] then
 			i = i - 1
 		end
 
@@ -316,6 +316,12 @@ function on.enterKey()
 
 		for i = 1, #msg do
 			table.insert(lines, msg[i])
+		end
+	elseif args[1] == 'ls' then
+		for i = 9, 1, -1 do 
+			if nans('=' .. i):find('{') == nil then
+				table.insert(lines, string.format('=%d: %20s', i, nans('=' .. i)))
+			end
 		end
 	elseif args[1] == 'rr' then
 		lines = {}
