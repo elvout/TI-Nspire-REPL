@@ -1,7 +1,7 @@
 INSYMB = '>>> '
 lines = {INSYMB}
 hist_index = 1
-hist_temp = ''
+hist_temp = INSYMB
 cursor = lines[#lines]:len()
 caret = '|'
 MAXLINES = 9
@@ -36,7 +36,7 @@ function on.paint(gc)
 					gc:getStringHeight('') * (#lines - start + 1) - 1	)
 
 	gc:setFont('sansserif', 'r', 10)
-	gc:drawString('Compiled 2019-01-07 10:08:51 PM', 5, platform.window:height() - 1)
+	gc:drawString('Compiled 2019-01-07 10:23:24 PM', 5, platform.window:height() - 1)
 	gc:drawString('-h for help', platform.window:width() - gc:getStringWidth('-h for help') - 5, 
 					platform.window:height() - 1)
 
@@ -109,6 +109,10 @@ function on.backspaceKey()
 end
 
 function on.arrowUp()
+	if hist_index == 1 then
+		return
+	end
+
 	if hist_index == #lines then
 		hist_temp = lines[#lines]
 	end
@@ -128,6 +132,10 @@ function on.arrowUp()
 end
 
 function on.arrowDown()
+	if hist_index == #lines then
+		return
+	end
+
 	hist_index = math.min(hist_index + 1, #lines)
 
 	while hist_index <= #lines do
@@ -321,7 +329,7 @@ function on.enterKey()
 	table.insert(lines, INSYMB)
 	
 	hist_index = #lines
-	hist_temp = ''
+	hist_temp = INSYMB
 	cursor = lines[#lines]:len()
 
 	platform.window:invalidate()
