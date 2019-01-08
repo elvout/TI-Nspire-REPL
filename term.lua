@@ -36,7 +36,7 @@ function on.paint(gc)
 					gc:getStringHeight('') * (#lines - start + 1) - 1	)
 
 	gc:setFont('sansserif', 'r', 10)
-	gc:drawString('Compiled 2019-01-08 08:48:21 AM', 5, platform.window:height() - 1)
+	gc:drawString('Compiled 2019-01-08 08:52:38 AM', 5, platform.window:height() - 1)
 	gc:drawString('-h for help', platform.window:width() - gc:getStringWidth('-h for help') - 5, 
 					platform.window:height() - 1)
 
@@ -308,8 +308,10 @@ function on.enterKey()
 		end
 	elseif args[1] == '-c' then
 		local msg = {
-			'> ba    converts numbers between bases',
+			'> ba    base conversion',
+			'> be    bearing function',
 			'> rr     clears history',
+			'> ls     lists available past results',
 			'> evaluates simple math if sole command',
 			''
 		}
