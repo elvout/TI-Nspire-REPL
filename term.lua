@@ -36,7 +36,7 @@ function on.paint(gc)
 					gc:getStringHeight('') * (#lines - start + 1) - 1	)
 
 	gc:setFont('sansserif', 'r', 10)
-	gc:drawString('Compiled 2019-01-08 09:06:15 AM', 5, platform.window:height() - 1)
+	gc:drawString('Compiled 2019-01-08 11:56:02 AM', 5, platform.window:height() - 1)
 	gc:drawString('-h for help', platform.window:width() - gc:getStringWidth('-h for help') - 5, 
 					platform.window:height() - 1)
 
@@ -245,7 +245,8 @@ function on.clearKey()
 end
 
 function rtrim(s)
-	for i = #s, 1, -1 do
+	s = tostring(s)
+	for i = #s, 5, -1 do
 		if s:byte(i) ~= 32 then
 			return s:sub(1, i)
 		end
@@ -267,14 +268,25 @@ function nans(idx)
 	return '{' .. idx .. '}'
 end
 
+function convertminus(args)
+	local MINUS = string.char(226) .. string.char(136) .. string.char(146)
+	for i = 1, #args do
+		args[i] = args[i]:gsub(MINUS, '-')
+	end
+	return args
+end
+
 function on.enterKey()
+	if lines[#lines] == PROMPT then return end
+
 	lines[#lines] = rtrim(lines[#lines])
 
 	if lines[#lines]:find('=') ~= nil then
 		lines[#lines] = lines[#lines]:gsub("(=%d)", nans)
 	end
 
-	local args = lines[#lines]:sub(5):split('[, ]+')
+	local orig = lines[#lines]:sub(5):split('[, ]+') or {}
+	local args = convertminus(orig)
 
 	if args[1]:sub(1, 2) == 'ba' then
 		if #args == 4 then
@@ -345,8 +357,8 @@ function on.enterKey()
 		end
 	elseif args[1] == '-dc' then
 		debug.cursor = not debug.cursor
-	elseif #args == 1 then
-		table.insert(lines, eval(args[1]))
+	elseif #args == 1 and args[1] ~= nil then
+		table.insert(lines, eval(orig[1]))
 	end
 	
 	table.insert(lines, PROMPT)

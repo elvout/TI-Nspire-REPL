@@ -14,7 +14,7 @@ function baseconv(s, from_radix, to_radix)
 		then return 'invalid base'
 	end
 
-	local negative = (s:byte() == 45) or (s:byte() == 226 and s:byte(2) == 136 and s:byte(3) == 146)
+	local negative = s:byte() == 45
 
 	local baseten = 0
 
