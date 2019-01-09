@@ -36,7 +36,7 @@ function on.paint(gc)
 					gc:getStringHeight('') * (#lines - start + 1) - 1	)
 
 	gc:setFont('sansserif', 'r', 10)
-	gc:drawString('Compiled 2019-01-08 11:56:02 AM', 5, platform.window:height() - 1)
+	gc:drawString('Compiled 2019-01-09 08:23:57 AM', 5, platform.window:height() - 1)
 	gc:drawString('-h for help', platform.window:width() - gc:getStringWidth('-h for help') - 5, 
 					platform.window:height() - 1)
 
@@ -303,7 +303,7 @@ function on.enterKey()
 			table.insert(lines, len)
 			table.insert(lines, angle)
 		else
-			table.insert(lines, 'Usage: be, x1, θ1, x2, θ2')
+			table.insert(lines, 'Usage: be, d1, θ1, d2, θ2')
 			table.insert(lines, 'angles are in degrees')
 		end	
 	elseif args[1] == '-h' or args[1] == 'help' then
@@ -311,7 +311,7 @@ function on.enterKey()
 			'> -c to list commands',
 			'=n : (1-9) access nth last result',
 			'up/down to access command history',
-			'left/right/tab/shift+tab to navigate',
+			'L/R/tab/shift+tab to navigate input',
 			'ctrl+del to delete word'
 		}
 
@@ -375,6 +375,10 @@ function eval(expr)
 	if result ~= nil then
 		return result
 	else
+		result, err = math.eval(expr .. ')')
+		if result ~= nil then
+			return result
+		end
 		return expr
 	end
 end
