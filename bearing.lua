@@ -17,13 +17,7 @@ function bearing(x1, t1, x2, t2)
 
 	yt = x1 * math.sin(_90 - t1) + x2 * math.sin(_90 - t2)
 
-	tf = math.deg(math.atan(yt / xt))
-
-	if (xt < 0) then
-		tf = tf + 180
-	end
-
-	tf = (tf + 360) % 360
+	tf = math.deg(math.atan2(yt , xt))
 
 	return string.format('%.4f', math.sqrt(xt * xt + yt * yt)), 
 			string.format('%.3fº', tf)
