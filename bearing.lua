@@ -19,6 +19,8 @@ function bearing(x1, t1, x2, t2)
 
 	tf = math.deg(math.atan2(yt , xt))
 
+	tf = (tf + 360) % 360
+
 	return string.format('%.4f', math.sqrt(xt * xt + yt * yt)), 
 			string.format('%.3fº', tf)
 
