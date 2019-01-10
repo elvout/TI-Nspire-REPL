@@ -11,13 +11,12 @@ function bearing(d1, t1, d2, t2)
 	t1 = math.rad(t1)
 	t2 = math.rad(t2)
 
-	_90 = math.pi / 2
+	local _90 = math.pi / 2
 
-	xt = d1 * math.cos(_90 - t1) + d2 * math.cos(_90 - t2)
+	local xt = d1 * math.cos(_90 - t1) + d2 * math.cos(_90 - t2)
+	local yt = d1 * math.sin(_90 - t1) + d2 * math.sin(_90 - t2)
 
-	yt = d1 * math.sin(_90 - t1) + d2 * math.sin(_90 - t2)
-
-	tf = math.deg(math.atan2(yt , xt))
+	local tf = math.deg(math.atan2(yt , xt))
 
 	tf = (tf + 360) % 360
 

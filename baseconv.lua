@@ -23,7 +23,7 @@ function baseconv(s, from_radix, to_radix)
 			return 'invalid input string'
 		end
 
-		baseten = tonumber(s:sub(2), from_radix) or tonumber(s:sub(4), from_radix)
+		baseten = tonumber(s:sub(2), from_radix)
 	else
 		baseten = tonumber(s, from_radix)
 	end
