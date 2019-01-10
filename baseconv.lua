@@ -16,16 +16,24 @@ function baseconv(s, from_radix, to_radix)
 
 	local negative = s:byte() == 45
 
-	local baseten = 0
-
 	if negative then
 		if s:len() == 1 then
 			return 'invalid input string'
 		end
 
-		baseten = tonumber(s:sub(2), from_radix)
-	else
-		baseten = tonumber(s, from_radix)
+		s = s:sub(2)
+	end
+
+	local inv = {}
+
+	for i = 1, #digits do 
+		inv[digits[i]] = i - 1
+	end
+
+	local baseten = 0
+
+	for i = 1, #s do 
+		baseten = baseten * from_radix + inv[s:sub(i, i)]
 	end
 
 	if baseten == nil or baseten ~= math.floor(baseten) then
