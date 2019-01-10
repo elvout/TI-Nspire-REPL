@@ -36,7 +36,7 @@ function on.paint(gc)
 					gc:getStringHeight('') * (#lines - start + 1) - 1	)
 
 	gc:setFont('sansserif', 'r', 10)
-	gc:drawString('Compiled 2019-01-10 08:42:22 AM', 5, platform.window:height() - 1)
+	gc:drawString('Compiled 2019-01-10 09:02:39 AM', 5, platform.window:height() - 1)
 	gc:drawString('-h for help', platform.window:width() - gc:getStringWidth('-h for help') - 5, 
 					platform.window:height() - 1)
 
@@ -244,6 +244,14 @@ function on.clearKey()
 	platform.window:invalidate()
 end
 
+function on.escapeKey()
+	lines[#lines] = PROMPT
+
+	cursor = lines[#lines]:len()
+	caret = '|'
+	platform.window:invalidate()	
+end
+
 function rtrim(s)
 	s = tostring(s)
 	for i = #s, 5, -1 do
@@ -258,7 +266,7 @@ function nans(idx)
 	local i = tonumber(idx:sub(2))
 
 	for j = #lines, 1, -1 do
-		if lines[j]:match('[a-f0-9.º\-]+') == lines[j] then
+		if lines[j]:match('[a-f0-9º%-%+%.]+') == lines[j] then
 			i = i - 1
 		end
 
@@ -358,6 +366,7 @@ function on.enterKey()
 	elseif args[1] == '-dc' then
 		debug.cursor = not debug.cursor
 	elseif #args == 1 and args[1] ~= nil then
+		orig[1] = orig[1]:gsub('e%+', '*10^')
 		table.insert(lines, eval(orig[1]))
 	end
 	
