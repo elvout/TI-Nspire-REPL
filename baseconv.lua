@@ -26,18 +26,17 @@ function baseconv(s, from_radix, to_radix)
 
 	local inv = {}
 
-	for i = 1, #digits do 
+	for i = 1, #digits do
 		inv[digits[i]] = i - 1
 	end
 
 	local baseten = 0
 
-	for i = 1, #s do 
+	for i = 1, #s do
+		if inv[s:sub(i, i)] == nil then
+			return 'invalid input string'
+		end
 		baseten = baseten * from_radix + inv[s:sub(i, i)]
-	end
-
-	if baseten == nil or baseten ~= math.floor(baseten) then
-		return 'invalid input string'
 	end
 
 	if to_radix == 10 then
