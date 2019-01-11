@@ -39,13 +39,13 @@ function baseconv(s, from_radix, to_radix)
 		baseten = baseten * from_radix + inv[s:sub(i, i)]
 	end
 
-	if to_radix == 10 then
-		return baseten
-	end
-
 	local result = ''
 
+
 	while baseten > 0 do
+		if digits[(baseten % to_radix) + 1] == nil then
+			return 'number too large'
+		end
 		-- 1 added because of 1-indexing
 		result = digits[(baseten % to_radix) + 1] .. result
 		baseten = math.floor(baseten / to_radix)
